@@ -17,3 +17,4 @@ module.exports = mongoose;
 
 //////
 require("./search-offers");
+require("./hotelRating");

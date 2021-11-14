@@ -8,9 +8,6 @@ var amadeus = new Amadeus({
     clientSecret: 'aaCvxicJL6Mr0nkg'
 });
 
-//Probando
-
-
 
 
 module.exports.searchOffer= async(req, res)=>{
@@ -71,22 +68,6 @@ module.exports.citySearch= async (req, res)=>{
       await res.json(err); 
     } 
 
-};
-
-module.exports.hotelRating= async (req, res)=>{
-    
-    console.log(req.query);
-    var hotelId = req.query.hotelIds;
-    const response= await amadeus.eReputation.hotelSentiments
-      .get({
-          hotelIds: hotelId
-      })
-      .catch((x) => console.log(x)); 
-    try { 
-      await res.json(JSON.parse(response.body)); 
-    } catch (err) { 
-      await res.json(err); 
-    } 
 };
 
 
