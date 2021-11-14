@@ -10,20 +10,7 @@ var amadeus = new Amadeus({
 
 //Probando
 
-/*
-amadeus.shopping.flightOffersSearch.get({
-    originLocationCode: 'SYD',
-    destinationLocationCode: 'BKK',
-    departureDate: '2021-11-20',
-    adults: '2',
-    max:'2'
-}).then(function(response){
-    console.log("Si funciono wey");
-  console.log(response.data);
-}).catch(function(responseError){
-  console.log(responseError.code);
-});
-*/
+
 
 
 module.exports.searchOffer= async(req, res)=>{
@@ -36,8 +23,7 @@ module.exports.searchOffer= async(req, res)=>{
             originLocationCode: locationDeparture,
             destinationLocationCode: locationArrival,
             departureDate: departure,
-            adults: '2',
-            max:'1'
+            adults: '2'
         })
         .catch((err)=> console.log(err));
         try{
@@ -86,3 +72,57 @@ module.exports.citySearch= async (req, res)=>{
     } 
 
 };
+
+module.exports.hotelRating= async (req, res)=>{
+    
+    console.log(req.query);
+    var hotelId = req.query.hotelIds;
+    const response= await amadeus.eReputation.hotelSentiments
+      .get({
+          hotelIds: hotelId
+      })
+      .catch((x) => console.log(x)); 
+    try { 
+      await res.json(JSON.parse(response.body)); 
+    } catch (err) { 
+      await res.json(err); 
+    } 
+};
+
+
+module.exports.flightOffer=async(req,res)=>{
+    console.log(req.query);
+    var originLocationCodes = req.query.originLocationCode;
+    var destinationLocationCodes = req.query.destinationLocationCode;
+    var departureDates = req.query.departureDate;
+    var adult = req.query.adults;
+    var maxs = req.query.max;
+    const response = await amadeus.shopping.flightOfferSearch
+        .get({
+            originLocationCode: originLocationCodes,
+            destinationLocationCode: destinationLocationCodes,
+            departureDate: departureDates,
+            adults: adult,
+            max:maxs
+        }).catch((x)=> console.log());
+        try{
+            await res.json(JSON.parse(response.body));
+        }catch(err){
+            await res.json(err);
+        }
+};
+
+/*
+amadeus.shopping.flightOffersSearch.get({
+    originLocationCode: 'SYD',
+    destinationLocationCode: 'BKK',
+    departureDate: '2021-11-20',
+    adults: '2',
+    max:'2'
+}).then(function(response){
+    console.log("Si funciono wey");
+  console.log(response.data);
+}).catch(function(responseError){
+  console.log(responseError.code);
+});
+*/

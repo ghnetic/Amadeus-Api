@@ -20,6 +20,6 @@ app.use("/shopping/flight-offers", rtsIndex); // api endpoint
 app.use(express.static(path.join(__dirname, "public")));
 
 //server
-app.listen(process.env.PORT, function () {
-  console.log("Servidor Levantado");
+app.listen(2800, function () {
+  console.log("Servidor Levantado en el puerto", 2800);
 });
