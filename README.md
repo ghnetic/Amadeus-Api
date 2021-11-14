@@ -1,4 +1,4 @@
-# ZonaMedica
+# Amadeus Api
 
 ## Proyecto de Clase
 
@@ -9,17 +9,10 @@
     2. Models
         * Define los achivos JS encargados de definir la estructura y manejo de la Base de Datos
     3. Routes
-        * Define los archivos JS encargados de enrutar los endpoints del servidor que sirven al Front End y Back End (API)
-    4. Config
-        * Archivos de configuracion
+        * Define los archivos JS encargados de enrutar los endpoints del servidor que sirven al  Back End (API)
+   
 
 ### Definicion del Proyecto
 
--   _Idea_: Aplicacion web diseñada con el proposito de poder servir como recurso inmediato para doctores que planean expandir su servicio (falta elaborar)
+-   _Idea_: Extracción de datos obtenidos de la Api Amadeus Development para el llenado a la base de datos NoSql MongoDB
 
-### Historial de Cambios/Mejoras
-
-#### 10/25/2021
-
--   Login/Registro de Doctores y Pacientes funcional
--   Modelos completados en un 80%
