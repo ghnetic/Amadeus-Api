@@ -19,6 +19,7 @@ module.exports.hotelRating= async (req, res)=>{
       .catch((x) => console.log(x)); 
     try { 
       await res.json(JSON.parse(response.body));
+      console.log("Imprimiendo el id");
       console.log(JSON.parse(response.body)); 
     } catch (err) { 
       await res.json(err); 
