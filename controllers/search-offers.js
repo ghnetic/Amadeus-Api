@@ -3,13 +3,20 @@ var SearchOffer = mongoose.model("SearchOffer");
 
 //Amadeus Developer token
 var Amadeus = require('amadeus');
-const searchOffers = require("../models/search-offers");
 var amadeus = new Amadeus({
     clientId: 'Ji26andXRj60pWYmqI8YCFm9Ko0JRaZ0',
     clientSecret: 'FsjDqAYsAKfajF7n'
 });
 
+//Imports de los Schemas
+const searchOffers = require("../models/search-offers");
+const mostTraveledFlights = require("../models/most-traveled-flights");
+const mostBookableFlights = require("../models/most-bookable-flights");
 
+
+
+
+//Metodo get para obtener los datos del get
 
 amadeus.shopping.flightOffersSearch.get({
     originLocationCode: 'NYC',
@@ -27,32 +34,28 @@ amadeus.shopping.flightOffersSearch.get({
     info.lastTicketingDate= response.data[i].lastTicketingDate,
     info.numberOfBookableSeats= response.data[i].numberOfBookableSeats,
     info.price= response.data[i].price
-
     //info.save();
-    console.log("Hizo el save");
+    //console.log("Hizo el save");
 }
 
-    //console.log("Si hizo el save");
-
-
-    //info.save();
-  //console.log(response.result); //Imprime todo el get
-  //console.log(response.data); //Imprime solo la data
-  //console.log(response.body); //Imprime todo en json
-  //console.log("Solo imprimiendo el tipo: ", response.data[0]);
 }).catch(function(responseError){
     console.log("No funciono wey")
   console.log(responseError);
 });
 
-
-//Otro Get
 amadeus.travel.analytics.airTraffic.traveled.get({
-    originCityCode : 'HND',
-    period : '2010-08'
+    originCityCode : 'NYC',
+    period : '2017-08'
   }).then(function (response){
-      console.log("Respuesta del otro GET");
-      console.log(response.body);
+    for(let i=0; i<response.data.length;i++){
+        let info= new mostTraveledFlights();
+        info.type= response.data[i].type,
+        info.destination= response.data[i].destination,
+        info.subType= response.data[i].subType,
+        info.analytics=response.data[i].analytics
+        //info.save();
+        //console.log("Save n.",i,"de Most Traveled Flights");
+    }
   }).catch(function(responseError){
     console.log("No funciono wey");
   console.log(responseError);
@@ -60,62 +63,20 @@ amadeus.travel.analytics.airTraffic.traveled.get({
 
 
 
-/*
-module.exports.searchOffer = (req, res) => {
-    console.log(req.body);
-    let data = new SearchOffer();
-    data.departure = req.body.departure;
-    data.arrival = req.body.arrival;
-    data.locationDeparture = req.body.locationDeparture;
-    data.locationArrival = req.body.locationArrival;
-
-    data.save((err, data) => {
-        if (err) res.status(500).send({ message: 'Error al guardar los datos' })
-
-        res.status(200).send({ data: data })
+amadeus.travel.analytics.airTraffic.booked.get({
+    originCityCode : 'MAD',
+    period : '2017-08'
+  }).then(function (response){
+    for(let i=0; i<response.data.length;i++){
+        let info= new mostBookableFlights();
+        info.type= response.data[i].type,
+        info.destination= response.data[i].destination,
+        info.subType= response.data[i].subType,
+        info.analytics=response.data[i].analytics
+        info.save();
+        console.log("Save n.",i,"de Most BOOKED Flights");
     }
-    );
-};
-
-module.exports.citySearch = async (req, res) => {
-
-    console.log(req.query);
-    var keywords = req.query.keyword;
-    const response = await amadeus.referenceData.locations
-        .get({
-            keyword: keywords,
-            subType: "CITY,AIRPORT",
-        })
-        .catch((x) => console.log(x));
-    try {
-        await res.json(JSON.parse(response.body));
-    } catch (err) {
-        await res.json(err);
-    }
-
-};
-
-
-module.exports.flightOffer = async (req, res) => {
-    console.log(req.query);
-    var originLocationCodes = req.query.originLocationCode;
-    var destinationLocationCodes = req.query.destinationLocationCode;
-    var departureDates = req.query.departureDate;
-    var adult = req.query.adults;
-    var maxs = req.query.max;
-    const response = await amadeus.shopping.flightOfferSearch
-        .get({
-            originLocationCode: originLocationCodes,
-            destinationLocationCode: destinationLocationCodes,
-            departureDate: departureDates,
-            adults: adult,
-            max: maxs
-        }).catch((x) => console.log());
-    try {
-        await res.json(JSON.parse(response.body));
-    } catch (err) {
-        await res.json(err);
-    }
-};
-*/
-
+  }).catch(function(responseError){
+    console.log("No funciono wey");
+  console.log(responseError);
+});
