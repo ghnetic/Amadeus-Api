@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const mongoAtlasUri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@amadeusapi.yrdec.mongodb.net/${process.env.MONGODB_DB_NAME}?retryWrites=true&w=majority`;
+const mongoAtlasUri = `mongodb+srv://sofiaVidea:mongodb-amadeusApi-sofia@amadeusapi.yrdec.mongodb.net/amadeusApiAir?retryWrites=true&w=majority`;
 
 try {
     // Connect to the MongoDB cluster

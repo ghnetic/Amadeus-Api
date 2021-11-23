@@ -5,7 +5,8 @@ var HotelRating = mongoose.model("HotelRating");
 var Amadeus = require("amadeus");
 var amadeus = new Amadeus({
     clientId: 'BJTLKGIHedQ6YSVDVEGMKUhqp5FKV0R5',
-    clientSecret: 'aaCvxicJL6Mr0nkg'
+    clientSecret: 'aaCvxicJL6Mr0nkg',
+    logLevel: 'debug'
 });
 
 module.exports.hotelRating= async (req, res)=>{
@@ -19,8 +20,9 @@ module.exports.hotelRating= async (req, res)=>{
       .catch((x) => console.log(x)); 
     try { 
       await res.json(JSON.parse(response.body));
-      console.log("Imprimiendo el id");
+      console.log("Imprimiendo el body................................................");
       console.log(JSON.parse(response.body)); 
+      CONSOLE.LOG(JSON.stringify(response.body))
     } catch (err) { 
       await res.json(err); 
     } 

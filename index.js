@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { mongoose } = require("./models/db");
+const bodyParser = require("body-parser");
 var path = require("path");
 
 //routes
@@ -10,8 +11,8 @@ const rtsIndex = require("./routes/router");
 var app = express();
 
 app.use(cors());
-app.use(express.urlencoded());
-app.use(express.json());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 
 //routers
 app.use("/shopping/flight-offers", rtsIndex); // api endpoint
